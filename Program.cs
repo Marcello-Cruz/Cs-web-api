@@ -37,4 +37,16 @@ app.MapGet("/api/tarefas", ([FromServices] tarefasContext _db) =>
     return Results.Ok(_db.Tarefa.ToList<Tarefa>());
 });
 
+app.MapGet("api/tarefas{id}", ([FromServices] tarefascontext _db, [FromRoute]int id) =>
+{
+var tarefa = _db.tarefa.find(id);
+
+if(tarefa == null)
+{
+ return Results.NotFound();
+}
+
+return Results.Ok(tarefa);
+});
+
 app.Run();
